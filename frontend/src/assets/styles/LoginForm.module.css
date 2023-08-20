@@ -1,0 +1,37 @@
+.formGroup {
+    display: flex;
+    margin-bottom: 5px; /* Add space between form fields */
+    align-items: center;
+  }
+
+.usernameLabel,
+.passwordLabel {
+  flex: 1; /* Allow labels to grow and take available space */
+}
+
+.usernameInput::before {
+  content: "\1F464"; /* Unicode character for "👤" */
+  margin-right: 5px; /* Add spacing between the icon and the input field */
+}
+
+.passwordInput::before {
+  content: "\1F512"; /* Unicode character for "🔒" */
+  margin-right: 5px; /* Add spacing between the icon and the input field */
+}
+
+.loginButton {
+  display: block;
+  margin: 10px auto;
+  padding: 10px 20px;
+  background-color:rgba(243, 243, 96, 0.7); /* Slightly beige background color with transparency */
+  color: #000; /* Black text color */
+  border: none;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.loginButton:hover {
+  background-color:  rgb(226, 226, 126);/* Slightly darker beige color on hover */
+}
