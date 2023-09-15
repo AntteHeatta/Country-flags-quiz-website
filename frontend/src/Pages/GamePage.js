@@ -6,31 +6,19 @@ import Timer from "../GameLogic/Timer";
 import CurrentScore from "../GameLogic/CurrentScore";
 import AnswerForm from "../GameLogic/AnswerForm";
 import FinalScore from "../GameLogic/FinalScore";
+import styles from "../assets/styles/GamePage.module.css";
+
+const { pageContainer, gameBox, startButton, logoutButtonPlacement } = styles;
 
 const GamePage = () => {
   const [flagUrl, setFlagUrl] = useState("");
   const [score, setScore] = useState(0);
-  // const [timer, setTimer] = useState(0);
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [gameEnded, setGameEnded] = useState(false);
   const [countryCode, setCountryCode] = useState("");
   const [countryName, setCountryName] = useState("");
-  const [gameStartTime, setGameStartTime] = useState(null);
-  const [gameEndTime, setGameEndTime] = useState(null);
   const [timeSpent, setTimeSpent] = useState(0);
-
-  // useEffect(() => {
-  //   const fetchFlags = async () => {
-  //     try {
-  //       const response = await axios.get("your-flag-api-url-here");
-  //       setFlag(response.data);
-  //     } catch (error) {
-  //       console.error("Error fetching flags:", error);
-  //     }
-  //   };
-
-  //   fetchFlags();
-  // }, []);
+  const [timer, setTimer] = useState(0.0);
 
   const fetchNextFlag = async (countryCode) => {
     // Fetch flag from your API
@@ -50,7 +38,15 @@ const GamePage = () => {
 
   useEffect(() => {
     if (isGameStarted) {
+      const intervalId = setInterval(() => {
+        setTimer((prevTimer) => prevTimer + 0.01);
+      }, 10);
+
       fetchNextFlag(countryCode);
+
+      return () => {
+        clearInterval(intervalId);
+      };
     }
   }, [isGameStarted, countryCode]);
 
@@ -58,11 +54,11 @@ const GamePage = () => {
   const startGame = () => {
     const randomCountryCode = randomizeCode();
     setCountryCode(randomCountryCode);
-    fetchNextFlag(randomCountryCode);
+    setFlagUrl("");
     setIsGameStarted(true);
     setGameEnded(false);
-    setGameStartTime(Date.now());
     setTimeSpent(0);
+    setTimer(0.0);
   };
 
   // Function to handle user's guess
@@ -88,8 +84,7 @@ const GamePage = () => {
   const endGame = () => {
     // Set gameStarted to false to stop the timer
     setIsGameStarted(false);
-    const endTime = Date.now();
-    setGameEndTime(endTime);
+    setTimeSpent(timer);
     setScore(0);
     setGameEnded(true);
   };
@@ -113,28 +108,34 @@ const GamePage = () => {
   };
 
   return (
-    <div>
+    <div className={pageContainer}>
       <h1>FLAG QUIZ</h1>
-      {/* Start Button */}
-      {isGameStarted ? (
-        <>
-          <Timer isActive={isGameStarted} setTimeSpent={setTimeSpent} />
-        </>
-      ) : (
-        <button onClick={startGame}>Start Game</button>
-      )}
-      {/* Conditionally render FinalScore */}
-      {gameEnded && <FinalScore timeTaken={timeSpent} />}
-      {/* Display Flag */}
-      {isGameStarted && <Flag flagUrl={flagUrl} />}
-      {/* Display Score */}
-      {isGameStarted && <CurrentScore score={score} />}
-      <AnswerForm
-        flagName={flagUrl.name}
-        onGuessSubmit={handleGuess}
-        isGameStarted={isGameStarted}
-      />
-      <LogoutButton />
+      <div className={gameBox}>
+        {/* Start Button */}
+        {isGameStarted ? (
+          <>
+            <p>{timer.toFixed(2)}</p>
+          </>
+        ) : (
+          <button onClick={startGame} className={startButton}>
+            Start Game
+          </button>
+        )}
+        {/* Conditionally render FinalScore */}
+        {gameEnded && <FinalScore timeTaken={timeSpent.toFixed(2)} />}
+        {/* Display Flag */}
+        {isGameStarted && <Flag flagUrl={flagUrl} />}
+        {/* Display Score */}
+        {isGameStarted && <CurrentScore score={score} />}
+        <AnswerForm
+          flagName={flagUrl.name}
+          onGuessSubmit={handleGuess}
+          isGameStarted={isGameStarted}
+        />
+        <div className={logoutButtonPlacement}>
+          <LogoutButton />
+        </div>
+      </div>
     </div>
   );
 };

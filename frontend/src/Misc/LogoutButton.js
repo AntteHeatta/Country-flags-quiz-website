@@ -1,5 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import styles from "../assets/styles/GamePage.module.css";
+
+const { logoutButton } = styles;
+
 
 const LogoutButton = () => {
   const navigate = useNavigate();
@@ -14,7 +18,12 @@ const LogoutButton = () => {
     }
   };
 
-  return <button onClick={handleLogout}>Logout</button>;
+  return (
+    <button onClick={handleLogout} className={logoutButton}>
+      Logout
+    </button>
+  );
+
 };
 
 export default LogoutButton;

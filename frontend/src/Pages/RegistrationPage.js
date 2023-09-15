@@ -1,6 +1,20 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import styles from "../assets/styles/RegistrationPage.module.css";
+
+const {
+  pageContainer,
+  formGroup,
+  registrationFormBox,
+  usernameInput,
+  usernameLabel,
+  emailLabel,
+  emailInput,
+  passwordLabel,
+  passwordInput,
+  registrationButton,
+} = styles;
 
 const RegistrationPage = () => {
   const [formData, setFormData] = useState({
@@ -36,38 +50,67 @@ const RegistrationPage = () => {
   };
 
   return (
-    <div>
+    <div className={pageContainer}>
       <h1>Registration</h1>
-      {errors && (
-        <div>
-          <ul style={{ listStyleType: "none", padding: 0 }}>
-            {Object.values(errors).map((error, index) => (
-              <li key={index}>{error}</li>
-            ))}
-          </ul>
-        </div>
-      )}
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="username"
-          placeholder="Username"
-          onChange={handleChange}
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          onChange={handleChange}
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          onChange={handleChange}
-        />
-        <button type="submit">Register</button>
-      </form>
+      <div className={registrationFormBox}>
+        {errors && (
+          <div>
+            <ul style={{ listStyleType: "none", padding: 0 }}>
+              {Object.values(errors).map((error, index) => (
+                <li key={index}>{error}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+        <form onSubmit={handleSubmit}>
+          <div className={formGroup}>
+            <label htmlFor="username" className={usernameLabel}></label>
+            <span
+              className={usernameInput}
+              role="img"
+              aria-label="user icon"
+            ></span>
+            <input
+              type="usernameRegister"
+              name="username"
+              placeholder="Username"
+              onChange={handleChange}
+            />
+          </div>
+          <div className={formGroup}>
+            <label htmlFor="email" className={emailLabel}></label>
+            <span
+              className={emailInput}
+              role="img"
+              aria-label="user icon"
+            ></span>
+            <input
+              type="emailRegister"
+              name="email"
+              placeholder="Email"
+              onChange={handleChange}
+            />
+          </div>
+          <div className={formGroup}>
+            <label htmlFor="password" className={passwordLabel}>
+              <span
+                className={passwordInput}
+                role="img"
+                aria-label="password icon"
+              ></span>
+            </label>
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              onChange={handleChange}
+            />
+          </div>
+          <button type="submit" className={registrationButton}>
+            Register
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

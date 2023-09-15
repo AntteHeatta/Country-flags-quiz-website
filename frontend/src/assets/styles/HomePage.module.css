@@ -1,0 +1,69 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(150deg, #dadabc, #d7d777); /* Diagonal beige gradient background */
+  color: #333; /* Text color */
+  overflow: hidden; /* Prevent horizontal scrollbars */
+}
+  
+.pageContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Set the container's height to 100% of the viewport height */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.loginFormBox {
+  background-color: rgba(255, 255, 243, 0.8); /* Slightly beige background color with transparency */
+  padding: 20px;
+  border-radius: 10px;
+  width: 300px;
+  margin: 0 auto; /* Center the box horizontally */
+  margin-top: 20px; /* Add some top margin for spacing */
+  text-align: center; /* Center text horizontally within the box */
+  box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.3); /* Add box shadow for 3D effect */
+}
+
+input[type="usernameLogin"],
+input[name="passwordLogin"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 20px; /* Add some border-radius to make them slightly rounded */
+  outline: none;
+}
+
+.registrationButton {
+  display: block;
+  margin: 5px auto;
+  padding: 10px 15px;
+  background-color: rgba(245, 245, 220, 0.8); /* Same color as the login form background with opacity */
+  border: 2px solid rgba(243, 243, 96, 0.7);/* Yellowish border */
+  border-radius: 20px; /* Rounded corners */
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.3s ease; /* Smooth color transition on hover */
+}
+
+.registrationButton:hover {
+  background-color:  rgb(226, 226, 126);
+  border-color:  rgb(226, 226, 126);
+  color: rgb(0, 0, 0); /* Black text color on hover */
+}
+  
+  .registrationLink {
+    text-decoration: none; /* Remove underlined text */
+    color: rgba(0, 0, 0, 0.455); /* Set text color to black */
+  }
+
+  .betweenLoginRegisterText{
+    padding: 10px;
+    color: rgba(0, 0, 0, 0.3); /* Black with reduced opacity */
+    font-weight: 300; /* Lighter font weight (300 is typically a lighter weight) */
+    font-size: 14px;
+  }

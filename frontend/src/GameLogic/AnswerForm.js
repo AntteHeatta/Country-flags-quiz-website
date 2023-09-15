@@ -1,7 +1,11 @@
 import React, { useState } from "react";
+import styles from "../assets/styles/GamePage.module.css";
 
-const AnswerForm = ({ flagName, onGuessSubmit, isGameStarted }) => {
-  const [guess, setGuess] = useState("");
+const { submitButton } = styles;
+
+const AnswerForm = ({ onGuessSubmit, isGameStarted }) => {
+
+const [guess, setGuess] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -17,11 +21,14 @@ const AnswerForm = ({ flagName, onGuessSubmit, isGameStarted }) => {
         <label>
           <input
             type="text"
+            name="submitGuess"
             value={guess}
             onChange={(e) => setGuess(e.target.value)}
           />
         </label>
-        <button type="submit">Submit</button>
+        <button type="submit" className={submitButton}>
+          Submit
+        </button>
       </form>
     )
   );
