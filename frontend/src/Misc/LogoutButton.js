@@ -4,6 +4,7 @@ import styles from "../assets/styles/GamePage.module.css";
 
 const { logoutButton } = styles;
 
+
 const LogoutButton = () => {
   const navigate = useNavigate();
 
@@ -22,6 +23,7 @@ const LogoutButton = () => {
       Logout
     </button>
   );
+
 };
 
 export default LogoutButton;

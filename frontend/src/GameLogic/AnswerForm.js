@@ -4,7 +4,8 @@ import styles from "../assets/styles/GamePage.module.css";
 const { submitButton } = styles;
 
 const AnswerForm = ({ onGuessSubmit, isGameStarted }) => {
-  const [guess, setGuess] = useState("");
+
+const [guess, setGuess] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();

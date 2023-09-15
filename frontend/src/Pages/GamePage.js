@@ -84,9 +84,7 @@ const GamePage = () => {
   const endGame = () => {
     // Set gameStarted to false to stop the timer
     setIsGameStarted(false);
-
     setTimeSpent(timer);
-
     setScore(0);
     setGameEnded(true);
   };
