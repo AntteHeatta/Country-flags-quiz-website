@@ -17,6 +17,8 @@ import com.countryquiz.website.model.SuccessfulResponse;
 import com.countryquiz.website.model.User;
 import com.countryquiz.website.model.UserRegistrationDTO;
 import com.countryquiz.website.service.UserService;
+import org.springframework.security.core.userdetails.UserDetails;
+import com.countryquiz.website.util.JwtUtil;
 
 /**
  * The RegistrationController class handles HTTP requests related to user
@@ -28,6 +30,9 @@ import com.countryquiz.website.service.UserService;
 @RequestMapping("/api/registration")
 @CrossOrigin(origins = "http://localhost:3000")
 public class RegistrationController {
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     private final UserService userService;
 
@@ -49,8 +54,13 @@ public class RegistrationController {
     public ResponseEntity<?> registerUser(@RequestBody @Valid UserRegistrationDTO user) {
         try {
             User userEntity = convertToUser(user);
+            userEntity.setRole("user");
             userService.registerUser(userEntity);
-            SuccessfulResponse response = new SuccessfulResponse("User registered successfully");
+
+            UserDetails userDetails = userService.loadUserByUsername(userEntity.getUsername());
+            String token = jwtUtil.generateToken(userDetails);
+
+            SuccessfulResponse response = new SuccessfulResponse(token);
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (DataIntegrityViolationException e) {
             ErrorResponse errorResponse = new ErrorResponse("Username or email already exists");
@@ -66,7 +76,6 @@ public class RegistrationController {
         user.setUsername(userRegistrationDTO.getUsername());
         user.setEmail(userRegistrationDTO.getEmail());
         user.setPassword(userRegistrationDTO.getPassword());
-        user.setRole(userRegistrationDTO.getRole());
         return user;
     }
 }

@@ -2,15 +2,19 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import LogoutButton from "../Misc/LogoutButton";
 import Flag from "../GameLogic/Flag";
-import Timer from "../GameLogic/Timer";
 import CurrentScore from "../GameLogic/CurrentScore";
 import AnswerForm from "../GameLogic/AnswerForm";
 import FinalScore from "../GameLogic/FinalScore";
+import { useAuth } from "../Misc/AuthProvider";
 import styles from "../assets/styles/GamePage.module.css";
+import { useNavigate } from "react-router-dom";
 
 const { pageContainer, gameBox, startButton, logoutButtonPlacement } = styles;
 
 const GamePage = () => {
+  const { authenticated, user } = useAuth();
+  const navigate = useNavigate();
+  const [timer, setTimer] = useState(0.0);
   const [flagUrl, setFlagUrl] = useState("");
   const [score, setScore] = useState(0);
   const [isGameStarted, setIsGameStarted] = useState(false);
@@ -18,11 +22,9 @@ const GamePage = () => {
   const [countryCode, setCountryCode] = useState("");
   const [countryName, setCountryName] = useState("");
   const [timeSpent, setTimeSpent] = useState(0);
-  const [timer, setTimer] = useState(0.0);
+  const [welcomeDisplayed, setWelcomeDisplayed] = useState(false);
 
   const fetchNextFlag = async (countryCode) => {
-    // Fetch flag from your API
-    // Set flag to the fetched data
     try {
       const response = await axios.get(
         `https://restcountries.com/v3/alpha/${countryCode}`
@@ -42,51 +44,71 @@ const GamePage = () => {
         setTimer((prevTimer) => prevTimer + 0.01);
       }, 10);
 
-      fetchNextFlag(countryCode);
-
       return () => {
         clearInterval(intervalId);
       };
     }
   }, [isGameStarted, countryCode]);
 
-  // Function to start the game
-  const startGame = () => {
+  useEffect(() => {
+    if (!authenticated) {
+      // Redirect to login page if not authenticated
+      navigate("/");
+    }
+  }, [authenticated, navigate]);
+
+  // useEffect(() => {
+  //   if (score === 2) {
+  //     endGame();
+  //   }
+  // }, [score]);
+
+  const endGame = () => {
+    setIsGameStarted(false);
+    setTimeSpent(timer);
+    setScore(0);
+    setGameEnded(true);
+
+    const userData = {
+      username: user.username, // Use the authenticated user's username
+      timeTaken: timer.toFixed(2),
+    };
+
+    axios
+      .post("http://localhost:8080/api/saveTimeTaken", userData, {
+        headers: {
+          Authorization: `Bearer ${user.token}`, // Include the token in the header
+        },
+      })
+      .then((response) => {
+        //Empty on purpose
+      })
+      .catch((error) => {
+        //Empty on purpose
+      });
+  };
+
+  const handleGuess = (guess) => {
+    if (guess.toLowerCase() === countryName.toLowerCase()) {
+      setScore(score + 1);
+    }
+    if (score === 9) {
+      endGame();
+    }
     const randomCountryCode = randomizeCode();
     setCountryCode(randomCountryCode);
+    fetchNextFlag(randomCountryCode);
+  };
+
+  const startGame = () => {
+    const randomCountryCode = randomizeCode();
+    fetchNextFlag(randomCountryCode);
     setFlagUrl("");
     setIsGameStarted(true);
     setGameEnded(false);
     setTimeSpent(0);
     setTimer(0.0);
-  };
-
-  // Function to handle user's guess
-  const handleGuess = (guess) => {
-    if (guess.toLowerCase() === countryName.toLowerCase()) {
-      setScore(score + 1);
-    }
-    const randomCountryCode = randomizeCode();
-    setCountryCode(randomCountryCode);
-    fetchNextFlag(randomCountryCode);
-
-    if (score === 2) {
-      endGame();
-    }
-    // // Check if the game is finished
-    // if (currentFlagIndex === flags.length - 1) {
-    //   setIsGameStarted(false);
-    // } else {
-    //   setCurrentFlagIndex(currentFlagIndex + 1);
-    // }
-  };
-
-  const endGame = () => {
-    // Set gameStarted to false to stop the timer
-    setIsGameStarted(false);
-    setTimeSpent(timer);
-    setScore(0);
-    setGameEnded(true);
+    setWelcomeDisplayed(true);
   };
 
   const randomizeCode = () => {
@@ -107,11 +129,15 @@ const GamePage = () => {
     return randomCountryCode;
   };
 
+  if (!authenticated) {
+    return null; // Render nothing if not authenticated
+  }
+
   return (
     <div className={pageContainer}>
       <h1>FLAG QUIZ</h1>
+      {!welcomeDisplayed && <h1>Welcome, {user.username}!</h1>}
       <div className={gameBox}>
-        {/* Start Button */}
         {isGameStarted ? (
           <>
             <p>{timer.toFixed(2)}</p>
@@ -121,17 +147,10 @@ const GamePage = () => {
             Start Game
           </button>
         )}
-        {/* Conditionally render FinalScore */}
         {gameEnded && <FinalScore timeTaken={timeSpent.toFixed(2)} />}
-        {/* Display Flag */}
         {isGameStarted && <Flag flagUrl={flagUrl} />}
-        {/* Display Score */}
         {isGameStarted && <CurrentScore score={score} />}
-        <AnswerForm
-          flagName={flagUrl.name}
-          onGuessSubmit={handleGuess}
-          isGameStarted={isGameStarted}
-        />
+        <AnswerForm onGuessSubmit={handleGuess} isGameStarted={isGameStarted} />
         <div className={logoutButtonPlacement}>
           <LogoutButton />
         </div>

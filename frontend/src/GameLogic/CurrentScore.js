@@ -3,7 +3,7 @@ import React from "react";
 const CurrentScore = ({ score }) => {
   return (
     <div>
-      <p>{score} / 3</p>
+      <p>{score} / 10</p>
     </div>
   );
 };

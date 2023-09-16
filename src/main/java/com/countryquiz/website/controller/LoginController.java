@@ -57,9 +57,8 @@ public class LoginController {
 
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             String token = jwtUtil.generateToken(userDetails);
-
-            SuccessfulResponse loginResponse = new SuccessfulResponse(token);
-            return ResponseEntity.ok(loginResponse);
+            SuccessfulResponse response = new SuccessfulResponse(token);
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
             ErrorResponse errorResponse = new ErrorResponse("Invalid username or password.");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);

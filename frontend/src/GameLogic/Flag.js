@@ -23,7 +23,7 @@ const Flag = ({ flagUrl }) => {
       {isLoaded ? (
         <img src={flagUrl} alt="Flag" style={flagStyle} />
       ) : (
-        <p>Loading...</p> // You can display a loading indicator here
+        <p>Loading...</p>
       )}
     </div>
   );
