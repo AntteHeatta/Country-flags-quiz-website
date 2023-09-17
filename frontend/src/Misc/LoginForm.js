@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "./AuthProvider";
 import styles from "../assets/styles/LoginForm.module.css";
 
 const {
@@ -15,7 +16,7 @@ const {
 const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
+  const { saveUserDataForLogin } = useAuth();
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
 
@@ -26,12 +27,10 @@ const LoginForm = () => {
         username,
         password,
       });
-      const token = response.data.token;
-      localStorage.setItem("jwtToken", token);
+      const token = response.data.response;
+      saveUserDataForLogin({ username, token });
       navigate("/gamePage");
     } catch (error) {
-      console.log(error);
-      console.log(error.response.data.response);
       setMessage(error.response.data.response);
     }
   };
@@ -48,10 +47,13 @@ const LoginForm = () => {
           aria-label="user icon"
         ></span>
         <input
-          type="usernameLogin"
+          type="text"
+          id="username"
+          name="usernameLogin"
           placeholder="Username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+          autoComplete="username"
         />
       </div>
       <div className={formGroup}>
@@ -64,6 +66,7 @@ const LoginForm = () => {
         </label>
         <input
           type="password"
+          id="password"
           name="passwordLogin"
           placeholder="Password"
           value={password}
@@ -73,7 +76,6 @@ const LoginForm = () => {
       <button type="submit" className={loginButton}>
         Login
       </button>
-
     </form>
   );
 };

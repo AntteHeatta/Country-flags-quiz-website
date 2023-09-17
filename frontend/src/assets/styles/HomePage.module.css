@@ -28,7 +28,7 @@ body {
   box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.3); /* Add box shadow for 3D effect */
 }
 
-input[type="usernameLogin"],
+input[name="usernameLogin"],
 input[name="passwordLogin"] {
   width: 100%;
   padding: 10px;
@@ -64,6 +64,6 @@ input[name="passwordLogin"] {
   .betweenLoginRegisterText{
     padding: 10px;
     color: rgba(0, 0, 0, 0.3); /* Black with reduced opacity */
-    font-weight: 300; /* Lighter font weight (300 is typically a lighter weight) */
+    font-weight: 300;
     font-size: 14px;
   }

@@ -26,7 +26,8 @@
 }
 
 .usernameLabel,
-.passwordLabel {
+.passwordLabel,
+.emailLabel {
   flex: 1; /* Allow labels to grow and take available space */
 }
 
@@ -45,9 +46,9 @@
     margin-right: 5px; /* Add spacing between the icon and the input field */
   }
 
-input[type="usernameRegister"],
-input[type="emailRegister"], 
-input[name="password"] {
+input[name="usernameRegister"],
+input[name="emailRegister"], 
+input[name="passwordRegister"] {
   width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
@@ -70,4 +71,48 @@ input[name="password"] {
   
   .registrationButton:hover {
     background-color:  rgb(226, 226, 126);/* Slightly darker beige color on hover */
+  }
+
+  .tooltipContainer {
+    position: relative;
+    display: inline-block;
+    display: flex;
+    margin-bottom: 5px; /* Add space between form fields */
+    align-items: center;
+  }
+  
+  /* Tooltip text */
+  .tooltipText {
+    visibility: hidden;
+    width: 150px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  /* Tooltip arrow */
+  .tooltipText::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #333 transparent transparent transparent;
+  }
+  
+  /* Show the tooltip on hover */
+  .tooltipContainer:hover .tooltipText {
+    visibility: visible;
+    opacity: 1;
   }

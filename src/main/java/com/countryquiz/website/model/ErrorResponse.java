@@ -1,7 +1,5 @@
 package com.countryquiz.website.model;
 
-import java.util.List;
-
 /**
  * The ErrorResponse class represents an object for handling error responses.
  */

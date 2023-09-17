@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../Misc/AuthProvider";
 import styles from "../assets/styles/RegistrationPage.module.css";
 
 const {
@@ -14,38 +15,31 @@ const {
   passwordLabel,
   passwordInput,
   registrationButton,
+  tooltipContainer,
+  tooltipText,
 } = styles;
 
 const RegistrationPage = () => {
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-    email: "",
-  });
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { saveUserDataForLogin } = useAuth();
 
   const navigate = useNavigate();
   const [errors, setErrors] = useState([]);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post(
         "http://localhost:8080/api/registration",
-        formData
+        { username, email, password }
       );
-      console.log("Registration successful", response.data);
+      const token = response.data.response;
+      saveUserDataForLogin({ username, token });
       navigate("/gamePage");
     } catch (error) {
-      console.log(error.response.data.errors);
-
-      // setMessage(error.response.data.response);
       setErrors(error.response.data);
-      console.log("Registration error", error);
     }
   };
 
@@ -62,19 +56,24 @@ const RegistrationPage = () => {
             </ul>
           </div>
         )}
+
         <form onSubmit={handleSubmit}>
-          <div className={formGroup}>
-            <label htmlFor="username" className={usernameLabel}></label>
-            <span
-              className={usernameInput}
-              role="img"
-              aria-label="user icon"
-            ></span>
+          <div className={tooltipContainer}>
+            <label htmlFor="username" className={usernameLabel}>
+              <div className={tooltipText}>Visible to all users</div>
+              <span
+                className={usernameInput}
+                role="img"
+                aria-label="user icon"
+              ></span>
+            </label>
             <input
-              type="usernameRegister"
-              name="username"
+              type="text"
+              id="username"
+              name="usernameRegister"
               placeholder="Username"
-              onChange={handleChange}
+              onChange={(e) => setUsername(e.target.value)}
+              autoComplete="username"
             />
           </div>
           <div className={formGroup}>
@@ -85,10 +84,12 @@ const RegistrationPage = () => {
               aria-label="user icon"
             ></span>
             <input
-              type="emailRegister"
-              name="email"
+              type="email"
+              id="email"
+              name="emailRegister"
               placeholder="Email"
-              onChange={handleChange}
+              onChange={(e) => setEmail(e.target.value)}
+              autoComplete="username"
             />
           </div>
           <div className={formGroup}>
@@ -101,9 +102,10 @@ const RegistrationPage = () => {
             </label>
             <input
               type="password"
-              name="password"
+              id="password"
+              name="passwordRegister"
               placeholder="Password"
-              onChange={handleChange}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <button type="submit" className={registrationButton}>
