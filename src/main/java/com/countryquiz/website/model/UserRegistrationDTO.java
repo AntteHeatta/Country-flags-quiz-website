@@ -12,6 +12,7 @@ import javax.validation.constraints.Size;
 public class UserRegistrationDTO {
 
     @NotBlank(message = "Username is required")
+    @Size(max = 12, message = "Username can be maximum of 12 characters long")
     private String username;
 
     @NotBlank(message = "Email is required")

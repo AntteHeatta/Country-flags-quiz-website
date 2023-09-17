@@ -1,0 +1,81 @@
+.pageContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .leaderboardBoxContainer {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .leaderboardBox {
+    background-color: rgba(255, 255, 243, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    width: auto; /* Remove fixed width */
+    max-width: 400px; /* Add maximum width */
+    margin: 0 10px;
+    margin-top: 20px;
+    text-align: center;
+    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.3);
+    overflow: hidden; /* Hide overflowing content */
+  }
+  
+  .leaderboardGrid {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 5px; /* Adjust the gap as needed */
+  }
+  
+  .leaderboardGrid div {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  text-align: left;
+  }
+
+  .leaderboardGrid div span {
+    display: inline-block;
+    width: 2em; /* Adjust the width as needed for your numbering */
+    text-align: center; /* Right-align the numbering */
+  }
+
+  .number {
+    margin-right: 5px;
+    font-weight: bold;
+  }
+
+  .backToGamePageButtonPlacementButton {
+    display: block;
+    margin: 5px auto;
+    padding: 10px 15px;
+    background-color: rgba(245, 245, 220, 0.8); /* Same color as the login form background with opacity */
+    border: 2px solid rgba(243, 243, 96, 0.7);/* Yellowish border */
+    border-radius: 20px; /* Rounded corners */
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease; /* Smooth color transition on hover */
+  }
+
+  .backToGamePageButtonPlacementButton:hover {
+    background-color:  rgb(226, 226, 126);
+    border-color:  rgb(226, 226, 126);
+    color: rgb(0, 0, 0); /* Black text color on hover */
+  }
+
+  .backToGamePageButtonPlacement {
+    position: absolute;
+    top: 10px; /* Adjust the top value to set the vertical position */
+    left: 10px; /* Adjust the right value to set the horizontal position */
+  }
+
+  .leaderboardText {
+    padding-bottom: 20px;
+  }
