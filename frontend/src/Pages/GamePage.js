@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import LogoutButton from "../Misc/LogoutButton";
+import LeaderboardButton from "../Misc/LeaderboardButton";
 import Flag from "../GameLogic/Flag";
 import CurrentScore from "../GameLogic/CurrentScore";
 import AnswerForm from "../GameLogic/AnswerForm";
@@ -9,7 +10,13 @@ import { useAuth } from "../Misc/AuthProvider";
 import styles from "../assets/styles/GamePage.module.css";
 import { useNavigate } from "react-router-dom";
 
-const { pageContainer, gameBox, startButton, logoutButtonPlacement } = styles;
+const {
+  pageContainer,
+  gameBox,
+  startButton,
+  logoutButtonPlacement,
+  leaderboardButtonPlacement,
+} = styles;
 
 const GamePage = () => {
   const { authenticated, user } = useAuth();
@@ -57,11 +64,11 @@ const GamePage = () => {
     }
   }, [authenticated, navigate]);
 
-  // useEffect(() => {
-  //   if (score === 2) {
-  //     endGame();
-  //   }
-  // }, [score]);
+  useEffect(() => {
+    if (score >= 20) {
+      endGame();
+    }
+  });
 
   const endGame = () => {
     setIsGameStarted(false);
@@ -90,10 +97,9 @@ const GamePage = () => {
 
   const handleGuess = (guess) => {
     if (guess.toLowerCase() === countryName.toLowerCase()) {
-      setScore(score + 1);
-    }
-    if (score === 9) {
-      endGame();
+      setScore(score + 2);
+    } else {
+      setScore(score - 1);
     }
     const randomCountryCode = randomizeCode();
     setCountryCode(randomCountryCode);
@@ -153,6 +159,9 @@ const GamePage = () => {
         <AnswerForm onGuessSubmit={handleGuess} isGameStarted={isGameStarted} />
         <div className={logoutButtonPlacement}>
           <LogoutButton />
+        </div>
+        <div className={leaderboardButtonPlacement}>
+          <LeaderboardButton />
         </div>
       </div>
     </div>

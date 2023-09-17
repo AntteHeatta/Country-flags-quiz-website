@@ -55,6 +55,12 @@
     color: rgb(0, 0, 0); /* Black text color on hover */
   }
 
+  .logoutButtonPlacement {
+    position: absolute;
+    top: 10px; /* Adjust the top value to set the vertical position */
+    right: 10px; /* Adjust the right value to set the horizontal position */
+  }
+
   .submitButton {
     display: block;
     margin: 10px auto;
@@ -80,8 +86,27 @@
     outline: none;
   }
 
-  .logoutButtonPlacement {
+  .leaderboardButton {
+    display: block;
+    margin: 5px auto;
+    padding: 10px 15px;
+    background-color: rgba(245, 245, 220, 0.8); /* Same color as the login form background with opacity */
+    border: 2px solid rgba(243, 243, 96, 0.7);/* Yellowish border */
+    border-radius: 20px; /* Rounded corners */
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease; /* Smooth color transition on hover */
+  }
+  
+  .leaderboardButton:hover {
+    background-color:  rgb(226, 226, 126);
+    border-color:  rgb(226, 226, 126);
+    color: rgb(0, 0, 0); /* Black text color on hover */
+  }
+
+  .leaderboardButtonPlacement {
     position: absolute;
     top: 10px; /* Adjust the top value to set the vertical position */
-    right: 10px; /* Adjust the right value to set the horizontal position */
+    left: 10px; /* Adjust the right value to set the horizontal position */
   }

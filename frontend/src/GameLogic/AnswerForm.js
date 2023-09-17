@@ -31,6 +31,7 @@ const AnswerForm = ({ onGuessSubmit, isGameStarted }) => {
           onChange={(e) => setGuess(e.target.value)}
           placeholder={"Enter your guess"}
           ref={inputRef}
+          autoComplete="off"
         />
         <button
           type="submit"
