@@ -7,9 +7,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import javax.annotation.PostConstruct;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -25,8 +27,15 @@ import io.jsonwebtoken.Jwts;
 @Service
 public class JwtUtil {
 
-    private final String SECRET_KEY = "ThisIsAStrongKeyThatIsAtLeast32CharactersLong";
-    SecretKey secretKey = new SecretKeySpec(SECRET_KEY.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
+    @Value("${jwt.secret-key}")
+    private String SECRET_KEY;
+
+    private SecretKey secretKey;
+
+    @PostConstruct
+    public void init() {
+        this.secretKey = new SecretKeySpec(SECRET_KEY.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
+    }
 
     /**
      * Extracts the username from a JWT token.
