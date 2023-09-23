@@ -1,6 +1,5 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "./AuthProvider";
 import styles from "../assets/styles/LeaderboardPage.module.css";
 
 const { backToGamePageButtonPlacementButton } = styles;

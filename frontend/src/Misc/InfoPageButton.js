@@ -2,23 +2,26 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "../assets/styles/GamePage.module.css";
 
-const { leaderboardButton } = styles;
+const { infoButton, buttonContainer } = styles;
 
-const LeaderboardButton = () => {
+const InfoPageButton = () => {
   const navigate = useNavigate();
 
   const handleClick = async () => {
     try {
-      navigate("/leaderboard");
+      navigate("/infoPage");
     } catch (error) {
       console.error("Navigation failed", error);
     }
   };
+
   return (
-    <button onClick={handleClick} class={leaderboardButton}>
-      Leaderboard
-    </button>
+    <div className={buttonContainer}>
+      <button onClick={handleClick} className={infoButton}>
+        Game info
+      </button>
+    </div>
   );
 };
 
-export default LeaderboardButton;
+export default InfoPageButton;
