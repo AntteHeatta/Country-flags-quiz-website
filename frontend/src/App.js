@@ -5,6 +5,7 @@ import HomePage from "./Pages/HomePage";
 import RegistrationPage from "./Pages/RegistrationPage";
 import GamePage from "./Pages/GamePage";
 import LeaderboardPage from "./Pages/LeaderboardPage";
+import InfoPage from "./Pages/InfoPage";
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
           <Route path="/register" element={<RegistrationPage />} />
           <Route path="/gamePage" element={<GamePage />} />
           <Route path="/leaderboard" element={<LeaderboardPage />} />
+          <Route path="/infoPage" element={<InfoPage />} />
         </Routes>
       </div>
     </Router>

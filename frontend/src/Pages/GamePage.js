@@ -9,6 +9,7 @@ import FinalScore from "../GameLogic/FinalScore";
 import { useAuth } from "../Misc/AuthProvider";
 import styles from "../assets/styles/GamePage.module.css";
 import { useNavigate } from "react-router-dom";
+import InfoPageButton from "../Misc/InfoPageButton";
 
 const {
   pageContainer,
@@ -16,6 +17,7 @@ const {
   startButton,
   logoutButtonPlacement,
   leaderboardButtonPlacement,
+  infoPageButtonPlacement,
 } = styles;
 
 const GamePage = () => {
@@ -153,6 +155,9 @@ const GamePage = () => {
             Start Game
           </button>
         )}
+        <div className={infoPageButtonPlacement}>
+          <InfoPageButton></InfoPageButton>
+        </div>
         {gameEnded && <FinalScore timeTaken={timeSpent.toFixed(2)} />}
         {isGameStarted && <Flag flagUrl={flagUrl} />}
         {isGameStarted && <CurrentScore score={score} />}
