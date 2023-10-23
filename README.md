@@ -8,3 +8,5 @@ Database used is MySQL which runs on Amazon RDS.
 
 Link: http://countryquizbucket.s3-website.eu-north-1.amazonaws.com/ 
 (Accessed via request)
+
+Images-folder contains screenshots of the website.
